@@ -6,3 +6,13 @@ crash.log
 
 # For built boxes
 *.box
+
+my-key*
+*.tfstate*
+.terraform*
+validate-yaml.py
+*.log
+certs
+crash*
+*.tfvars*
+!*.tfvars.example
