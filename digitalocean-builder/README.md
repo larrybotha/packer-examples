@@ -7,7 +7,7 @@ Digitalocean.
 
 ## Instructions
 
-### Build an image
+### Build images / snapshots
 
 1. install Packer on your machine
 2. create an access token in Digitalocean, and set it in your environment
@@ -20,25 +20,39 @@ Digitalocean.
    $ packer build -var docean_api_token=$DO_ACCESS_TOKEN ./packer
    ```
 
-### Provision a droplet using the image
+### Provision droplets using the images
 
 1. install Terraform on your machine
-1. initialise terraform
+2. initialise terraform
    ```bash
    $ terraform -chdir=./terraform init
    ```
-1. view the plan
+3. view the plan
    ```bash
    $ terraform -chdir=./terraform plan
    ```
-1. apply the plan
+4. apply the plan
    ```bash
    $ terraform -chdir=./terraform apply -var=docean_api_token=$DO_ACCESS_TOKEN
    ```
-1. clean up
+5. clean up
    ```bash
    $ terraform -chdir=./terraform destroy -var=docean_api_token=$DO_ACCESS_TOKEN
    ```
+
+## Notes
+
+- to use the snapshot with Terraform, the `digitalocean_image` data source needs
+  to be used in order to dynamically get the droplet's ID in
+  `digitalocean_droplet`
+
+  See [./terraform/droplets.tf](./terraform/droplets.tf)
+
+- if multiple snapshots with the same name are built, and that name is provided
+  to `digitalocean_image`, Terraform will raise an error with the following
+  message: `│ Error: too many images found with name [name] (found [x], expected 1)`
+- every size required for provisioning instances in Terraform requires an
+  explicit build in Packer
 
 ## Links and resources
 
