@@ -8,10 +8,3 @@ packer {
     }
   }
 }
-
-source "digitalocean" "1vcpu-1gb" {
-  image = var.image
-  size = var.image
-  region = var.region
-  ssh_username=var.root
-}
